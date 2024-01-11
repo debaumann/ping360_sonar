@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from math import cos, pi, sin
 
@@ -11,7 +11,7 @@ from sensor_msgs.msg import Image
 from sensor_msgs.msg import LaserScan
 
 from ping360_sonar.cfg import sonarConfig
-from ping360_sonar.msg import SonarEcho
+from ping_360_msgs.msg import SonarEcho
 from sensor import Ping360
 
 # Global Variables
@@ -360,9 +360,15 @@ def getSamplePeriod(samplePeriod, _samplePeriodTickDuration=25e-9):
 
 def updateSonarConfig(sensor, gain, transmitFrequency, transmitDuration, samplePeriod, numberOfSamples):
     global updated
-    sensor.set_gain_setting(gain)
-    sensor.set_transmit_frequency(transmitFrequency)
-    sensor.set_transmit_duration(transmitDuration)
-    sensor.set_sample_period(samplePeriod)
-    sensor.set_number_of_samples(numberOfSamples)
+    sensor.set_gain_setting(int(gain))   
+    sensor.set_transmit_frequency(int(transmitFrequency))
+    sensor.set_transmit_duration(int(transmitDuration))
+    sensor.set_sample_period(int(samplePeriod))
+    sensor.set_number_of_samples(int(numberOfSamples))
     updated = False
+
+if __name__ == '__main__':
+    try:
+        main()
+    except rospy.ROSInterruptException:
+        pass
